@@ -25,13 +25,13 @@ CREATE TABLE artists (artist_id varchar, name varchar, location varchar, latitud
 """)
 
 time_table_create = ("""
-CREATE TABLE time (start_time time, hour int, day int, week int, month int, year int, weekday int)
+CREATE TABLE time (start_time time, hour int, day int, week int, month int, year int, weekday varchar)
 """)
 
 # INSERT RECORDS
 
 songplay_table_insert = ("""
-INSERT INTO songplay (songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
+INSERT INTO songplays (songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
 """)
 
@@ -41,12 +41,12 @@ VALUES (%s, %s, %s, %s, %s);
 """)
 
 song_table_insert = ("""
-INSERT INTO song (song_id, title, artist_id, year, duration)
+INSERT INTO songs (song_id, title, artist_id, year, duration)
 VALUES (%s, %s, %s, %s, %s);
 """)
 
 artist_table_insert = ("""
-INSERT INTO artist (artist_id, name, location, latitude, longitude)
+INSERT INTO artists (artist_id, name, location, latitude, longitude)
 VALUES (%s, %s, %s, %s, %s);
 """)
 
@@ -59,6 +59,11 @@ VALUES (%s, %s, %s, %s, %s, %s, %s);
 # FIND SONGS
 
 song_select = ("""
+SELECT song_id, artists.artist_id
+    FROM songs JOIN artists ON songs.artist_id = artists.artist_id
+    WHERE songs.title = %s
+    AND artists.name = %s
+    AND songs.duration = %s
 """)
 
 # QUERY LISTS
