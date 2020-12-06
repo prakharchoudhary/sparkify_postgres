@@ -21,7 +21,7 @@ CREATE TABLE songs (song_id varchar, title text, artist_id varchar, year int, du
 """)
 
 artist_table_create = ("""
-CREATE TABLE artists (artist_id varchar, name varchar, location varchar, latitude decimal(8), longitude decimal(8))
+CREATE TABLE artists (artist_id varchar, name varchar, location varchar, latitude decimal, longitude decimal)
 """)
 
 time_table_create = ("""

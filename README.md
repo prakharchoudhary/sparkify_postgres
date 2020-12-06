@@ -48,9 +48,9 @@ The files used in the Project are as below:
 
 - __.gitignore__ : gitignore files for python.
 
-## Database Schema
+## What's the Database like?
 
-The schema used here is the Star Schema. It has 1 FACT TABLE (songplays) and 4 DIMENSION TABLES (users, songs, artists and time.)
+The DB schema used here is the Star Schema. It has 1 FACT TABLE (songplays) and 4 DIMENSION TABLES (users, songs, artists and time.)
 
 The schema of each table is as follows:
 
@@ -74,8 +74,52 @@ __users__ - Stores data of users
 
 | Attribute | Datatype | Description|
 |-----------|----------|------------|
-| user_id |INT| ID of user|
-| first_name |VARCHAR| First name of user|
-| last_name |VARCHAR| Last name of user|
-| gender |VARCHAR(2)|  Gender of user - M, F or OT(to provide choice if user does not want to reveal)|
-| level |VARCHAR|  User level [free or paid]|
+| user_id |INT| ID of user.|
+| first_name |VARCHAR| First name of user.|
+| last_name |VARCHAR| Last name of user.|
+| gender |VARCHAR(2)|  Gender of user - M, F or OT(to provide choice if user does not want to reveal).|
+| level |VARCHAR|  User level [free or paid].|
+
+__songs__ - Stores data of songs
+
+| Attribute | Datatype | Description|
+|-----------|----------|------------|
+| song_id | VARCHAR | ID of song. |
+| title | TEXT | Title of the song. |
+| artist_id | VARCHAR | ID of the Arist who composed the song. |
+| year | INT | Year the song was released. |
+| duration | DECIMAL | Total runtime duration of song. |
+
+__artist__ - Stores data of artists
+
+| Attribute | Datatype | Description|
+|-----------|----------|------------|
+| artist_id | VARCHAR | ID of Artist
+| name | VARCHAR | Name of Artist
+| location | VARCHAR | Name of the city Artist comes from |
+| latitude | DECIMAL | Latitude location of artist |
+| longitude | DECIMAL | Longitude location of artist |
+
+__time__ - Stores timestamps of the played songs.
+
+| Attribute | Datatype | Description|
+|-----------|----------|------------|
+| start_time | TIME | Timestamp |
+| hour | INT | Hour of the start_time |
+| day | INT | Day of the start_time |
+| week | INT | Week of year of the start_time |
+| month | INT | Month of the start_time |
+|year | INT | Year of the start_time |
+| weekday | VARCHAR | Name of week day of the start_time |
+
+## How to run?
+
+- Ensure that you are running `Python3.x` and have the following packages:
+    - psycopg2==2.8.6
+    - pandas==1.1.3
+
+- Run the `create_tables.py` script to create the database and required tables.
+
+- Run the `etl.py` script to populate tables with data.
+
+- Run `test.ipynb` to validate the tables have been populated.
