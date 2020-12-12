@@ -74,7 +74,7 @@ __users__ - Stores data of users
 
 | Attribute | Datatype | Description|
 |-----------|----------|------------|
-| user_id |INT| ID of user.|
+| user_id |VARCHAR| ID of user.|
 | first_name |VARCHAR| First name of user.|
 | last_name |VARCHAR| Last name of user.|
 | gender |VARCHAR(2)|  Gender of user - M, F or OT(to provide choice if user does not want to reveal).|
