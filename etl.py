@@ -16,15 +16,16 @@ def process_song_file(cur, filepath):
     # open song file
     df = pd.read_json(filepath, lines=True)
 
-    # insert song record
     for _, row in df.iterrows():
-        song_data = list(row[["song_id", "title", "artist_id", "year", "duration"]].values)
-        cur.execute(song_table_insert, song_data)
         
         # insert artist record
         artist_data = list(row[["artist_id", "artist_name", "artist_location", "artist_latitude", "artist_longitude"]].values)
         cur.execute(artist_table_insert, artist_data)
-
+        
+        # insert song record
+        song_data = list(row[["song_id", "title", "artist_id", "year", "duration"]].values)
+        cur.execute(song_table_insert, song_data)
+        
 
 def process_log_file(cur, filepath):
     '''
@@ -42,7 +43,7 @@ def process_log_file(cur, filepath):
 
     # convert timestamp column to datetime
     t = pd.to_datetime(df['ts'], unit='ms')
-    
+
     # insert time data records
     time_data = []
     for item in t:
@@ -66,7 +67,8 @@ def process_log_file(cur, filepath):
     for index, row in df.iterrows():
         
         # get songid and artistid from song and artist tables
-        results = cur.execute(song_select, (row.song, row.artist, row.length))
+        cur.execute(song_select, (row.song, row.artist, row.length))
+        results = cur.fetchone()
         songid, artistid = results if results else None, None
 
         # insert songplay record
@@ -86,7 +88,7 @@ def process_data(cur, conn, filepath, func):
     '''
     # get all files matching extension from directory
     all_files = []
-    for root, dirs, files in os.walk(filepath):
+    for root, _, files in os.walk(filepath):
         files = glob.glob(os.path.join(root,'*.json'))
         for f in files :
             all_files.append(os.path.abspath(f))
